@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image: 
+  repository: users-service
+  tag: v1.0
+  pullPolicy: ifNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+  hosts: 
+   - host: users.emicorp.local
+     paths:
+      - path: /
+        pathType: Prefix
+  tls: []
+
+envFrom:
+ configMapRef:
+  name: users-config
+ secretRef:
+  name: service-secrets
+

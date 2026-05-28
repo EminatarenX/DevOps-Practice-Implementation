@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: {{ include "users-service-chart.fullname" . }}
+
+spec:
+  ingressClassName: nginx
+
+  rules:
+    - host: users.emicorp.local
+
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+
+            backend:
+              service:
+                name: {{ include "users-service-chart.fullname" . }}
+                port: 
+                  number: {{ .Values.service.port }}
